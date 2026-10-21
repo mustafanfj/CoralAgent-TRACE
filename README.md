@@ -2,6 +2,14 @@
 
 **An evidence-grounded agentic framework for coral reef health assessment and visual question answering.**
 
+<p>
+<img src="https://img.shields.io/badge/paper-Frontiers%20in%20Marine%20Science%20%C2%B7%20under%20review-0B6A66?style=flat-square" alt="paper: Frontiers in Marine Science · under review">
+<a href="https://huggingface.co/datasets/CoralReefData/CoralVQA"><img src="https://img.shields.io/badge/dataset-CoralVQA-0B6A66?style=flat-square" alt="dataset: CoralVQA"></a>
+<a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-0B6A66?style=flat-square" alt="license: MIT"></a>
+<img src="https://img.shields.io/badge/python-3.10%2B-0B6A66?style=flat-square&logo=python&logoColor=white" alt="python: 3.10+">
+<a href="https://mustafanfj.github.io"><img src="https://img.shields.io/badge/author-Mustafa%20Al%20Juboori-17202A?style=flat-square" alt="author: Mustafa Al Juboori"></a>
+</p>
+
 CoralAgent-TRACE answers questions about coral reef images (health status, bleaching, genus, morphology, color, presence and coverage) by planning a short, question-specific sequence of tools instead of asking a single vision-language model to answer from the whole image. Every answer comes with the evidence that produced it and is checked by an independent verifier before it is returned.
 
 > **Paper:** M. Al Juboori†, Z. Abbas† and M. Ur Rehman, "CoralAgent-TRACE: An Evidence-Grounded Agentic Framework for Coral Reef Health Assessment and Visual Question Answering," *Frontiers in Marine Science* (Coral Reef Research), under review, 2026. († equal contribution)
