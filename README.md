@@ -4,7 +4,7 @@
 
 CoralAgent-TRACE answers questions about coral reef images (health status, bleaching, genus, morphology, color, presence and coverage) by planning a short, question-specific sequence of tools instead of asking a single vision-language model to answer from the whole image. Every answer comes with the evidence that produced it and is checked by an independent verifier before it is returned.
 
-> **Paper:** M. Al Juboori, M. Ur Rehman and Z. Abbas, "CoralAgent-TRACE: An Evidence-Grounded Agentic Framework for Coral Reef Health Assessment and Visual Question Answering," *Frontiers in Marine Science* (Coral Reef Research), under review, 2026.
+> **Paper:** M. Al Juboori†, Z. Abbas† and M. Ur Rehman, "CoralAgent-TRACE: An Evidence-Grounded Agentic Framework for Coral Reef Health Assessment and Visual Question Answering," *Frontiers in Marine Science* (Coral Reef Research), under review, 2026. († equal contribution)
 
 ![CoralAgent-TRACE architecture](figures/coralagent_architecture.png)
 
@@ -32,7 +32,7 @@ Development experiment on **CoralVQA**: 100 images × 6 questions (600 question�
 | Grok, zero-shot | 0.475 |
 | Gemma, zero-shot | 0.438 |
 
-CoralAgent-TRACE improves on the strongest single model by **+3.7 points** (7.1% relative).
+CoralAgent-TRACE improves on the strongest single model by **+3.7 points** (7.1% relative), and also edges out a weighted ensemble of the zero-shot models (0.553).
 
 **Ablations** show that each component contributes:
 
@@ -51,7 +51,7 @@ Running every tool on every question is worse than planning which tools to call.
 
 ![Ablation study](figures/ablation_100.jpg)
 
-**Scope of these results.** The first 100 images were inspected during development, so they are development and ablation evidence. The frozen policy was then extended to a persistent 500-image bank (images 101–500). Any further tuning after that extension would need a new untouched set, and the notebook includes a template for cross-region validation on PAC-USA.
+**Scope of these results.** The first 100 images were inspected during development, so they are development and ablation evidence. The frozen policy was then deployed unchanged on a persistent 500-image bank: it completed all 3,000 question–answer episodes and returned evaluable answers for 98.3% of them. Any further tuning after that extension would need a new untouched set, and the notebook includes a template for cross-region validation on PAC-USA.
 
 ## Repository contents
 
@@ -93,6 +93,10 @@ Keep `CORALAGENT_EXPERIMENT_TAG` unchanged when moving from 100 to 500 images so
 ## Citation
 
 The paper is under review. A BibTeX entry will be added here on publication.
+
+## License
+
+Code released under the [MIT License](LICENSE).
 
 ## Contact
 
