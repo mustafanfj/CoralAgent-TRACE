@@ -13,3 +13,6 @@ opencv-python-headless>=4.10.0
 numexpr>=2.10.2
 bottleneck>=1.4.2
 nbformat>=5.10.0
+# v13 revision runner (batch APIs)
+xai-sdk>=1.21
+together>=2.0

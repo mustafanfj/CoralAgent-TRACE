@@ -10,93 +10,85 @@
 <a href="https://mustafanfj.github.io"><img src="https://img.shields.io/badge/author-Mustafa%20Al%20Juboori-17202A?style=flat-square" alt="author: Mustafa Al Juboori"></a>
 </p>
 
-CoralAgent-TRACE answers questions about coral reef images (health status, bleaching, genus, morphology, color, presence and coverage) by planning a short, question-specific sequence of tools instead of asking a single vision-language model to answer from the whole image. Every answer comes with the evidence that produced it and is checked by an independent verifier before it is returned.
+CoralAgent-TRACE answers questions about coral reef images (bleaching, genus, morphology, colour, presence and cover). It uses a fixed, question-conditioned sequence of tools instead of asking one vision-language model to answer from the whole image. Every answer comes with the evidence that produced it.
 
 > **Paper:** M. Al Juboori†, Z. Abbas† and M. Ur Rehman, "CoralAgent-TRACE: An Evidence-Grounded Agentic Framework for Coral Reef Health Assessment and Visual Question Answering," *Frontiers in Marine Science* (Coral Reef Research), under review, 2026. († equal contribution)
+
+> **Revision (v13).** This version accompanies the revised manuscript. An audit for the first review found implementation problems in the submitted version (v12). The main one: most GPT-5 tool calls returned empty output because reasoning used up the output budget. The problems were fixed, an evaluation protocol was frozen ([PROTOCOL.md](PROTOCOL.md)), and every experiment was re-run. All results below come from v13. The submitted v12 notebook is kept unchanged as `CoralAgent_TRACE.ipynb`.
 
 ![CoralAgent-TRACE architecture](figures/coralagent_architecture.png)
 
 ## How it works
 
-1. **SCOPE** (Spatial Coral Observation and Patch Extraction) parses the question's spatial language and crops the region it refers to: a quadrant, the central colony, or the full image.
-2. A **baseline-prior tool** supplies a cached zero-shot answer from a full-image VLM. It is treated as one piece of evidence, never as ground truth.
-3. The **TRACE orchestrator** (GPT-5) builds a tool plan from the question type and runs only the planned tools: focused VQA on the crop, genus identification, morphology summary, and retrieval from a curated coral knowledge base.
-4. **TRACE answer synthesis** combines the baseline prior with the focused evidence and canonicalizes the result to CoralVQA's short-answer format.
-5. **GUARD** (Grok-4.3) independently verifies the candidate answer against the evidence. Supported answers are accepted, partially supported ones go through a constrained repair, and unsupported ones fall back to a verifier-suggested correction.
+1. **SCOPE** parses the question's spatial language and crops the region it refers to.
+2. A **baseline prior** supplies a strict zero-shot GPT-5 answer. It is one piece of evidence, never ground truth.
+3. **TRACE routing** chooses the tools from the requested answer type (Eq. 5 of the paper): focused VQA on the crop, genus identification, an image summary and retrieval from a curated coral knowledge base. Routing is deterministic, not open-ended planning.
+4. **Answer synthesis** arbitrates between the prior and the tool evidence with fixed rules and returns a short CoralVQA-style answer.
+5. **GUARD** (Grok-4.3) checks the answer against the evidence. Answers of a protected type (genus, count, colour) are only repaired when they are invalid.
 
-Routing is question-conditioned and planned, not multi-agent debate and not a learned free-form tool policy.
+## Results (v13)
 
-## Results
+CoralVQA training split, 500 images × 6 questions. The development set D is images 1–100 (600 questions); the held-out set H is images 101–500 (2,400 questions). H100 is a pre-registered random 100-image subset of H (seed 2026). Paired differences use a 95% image-cluster bootstrap CI and an exact McNemar test.
 
-Development experiment on **CoralVQA**: 100 images × 6 questions (600 question–answer pairs), semantic accuracy.
-
-![Comparison with single-model zero-shot VLMs](figures/baselines_100.jpg)
-
-| Method | Semantic accuracy |
+| Method | H accuracy (2,400 questions) |
 |---|---:|
-| **CoralAgent-TRACE** | **0.557** |
-| GPT-5, strict zero-shot | 0.520 |
-| GPT-4.1, zero-shot | 0.510 |
-| Grok, zero-shot | 0.475 |
-| Gemma, zero-shot | 0.438 |
+| **CoralAgent-TRACE (v13)** | **0.520** |
+| GPT-4.1, zero-shot | 0.527 |
+| GPT-5, strict zero-shot | 0.500 |
+| Grok-4.3, zero-shot | 0.483 |
 
-CoralAgent-TRACE improves on the strongest single model by **+3.7 points** (7.1% relative), and also edges out a weighted ensemble of the zero-shot models (0.553).
+![Paired differences](analysis/figures/fig_paired_differences.png)
 
-**Ablations** show that each component contributes:
+- **Primary, pre-registered:** TRACE beats strict GPT-5 by +2.0 points (CI +0.4 to +3.6, p = 0.011). The gain is concentrated on bleaching and health questions (0.759 vs 0.634).
+- **Matched controls on H100:** TRACE beats a generic GPT-5 tool-using agent with the same tools and verifier (+4.2, Holm p = 0.018). It also beats a single GPT-5 call given the same information (+5.0, Holm p = 0.009). It is not significantly better than GPT-5 self-consistency (+2.3) or GPT-4.1.
+- **Evidence:** blinded LLM judges rate TRACE's evidence as grounded as the generic agent's. Its traces expose more of its own errors (56% vs 26% of wrong answers). Referring the least-trusted 40% of answers raises the accuracy of the rest from 0.545 to 0.669.
 
-| Variant | Semantic accuracy |
-|---|---:|
-| Full method (A3) | **0.557** |
-| + chart detection, segmentation and bleaching proxy (A7) | 0.548 |
-| No retrieval | 0.535 |
-| Baseline prior + SCOPE only | 0.468 |
-| No baseline prior | 0.460 |
-| Fixed pipeline running every tool | 0.430 |
-| No GUARD verifier | 0.430 |
-| SCOPE only | 0.232 |
+![Selective accuracy](analysis/figures/fig_selective_accuracy.png)
 
-Running every tool on every question is worse than planning which tools to call. Removing the verifier costs 12.7 points.
+- **Ablations on D:** the prior with SCOPE and routing carries the gain. Retrieval has no measurable effect, and GUARD lowers accuracy slightly (removing it adds +2.8 on D and +1.3 on H).
+- **Limitations:** visible-bleaching sensitivity is low (0.333 on H, specificity 0.864). The closed genus list lowers accuracy for every model, because the prompt shows only the first 90 of 392 labels. Results are limited to the CoralVQA benchmark.
 
-![Ablation study](figures/ablation_100.jpg)
-
-**Scope of these results.** The first 100 images were inspected during development, so they are development and ablation evidence. The frozen policy was then deployed unchanged on a persistent 500-image bank: it completed all 3,000 question–answer episodes and returned evaluable answers for 98.3% of them. Any further tuning after that extension would need a new untouched set, and the notebook includes a template for cross-region validation on PAC-USA.
+The full tables are in [`analysis/`](analysis): `E2_headline.md`, `H100_controls.md`, `E3_ablations.md`, `E4_genus.md`, `E8_judge.md` and `Remaining_analyses.md`.
 
 ## Repository contents
 
 | Path | Contents |
 |---|---|
-| `CoralAgent_TRACE.ipynb` | The complete, executable pipeline: data loading, the 500-image bank, all tools, TRACE, GUARD, baselines, A0–A8 ablations, metrics, paired tests, figures and qualitative evidence traces |
-| `requirements.txt` | Python dependencies |
-| `.env.example` | The environment variables the notebook reads |
-| `figures/` | Architecture and results figures |
+| `PROTOCOL.md` | Frozen evaluation protocol and every dated deviation |
+| `coralagent/` | v13 runner: v12 core (generated from the notebook) plus fixes, batch gateway and evaluation |
+| `tools/extract_v12_core.py` | Regenerates `coralagent/v12_core.py` from the v12 notebook |
+| `results/v13/` | Per-question outputs for every method (compressed JSONL) |
+| `analysis/` | Analysis scripts, result tables, figures, `evaluation_ids.csv` (all 3,000 question IDs and splits) and `failure_cases.json` |
+| `data_release/` | The 500-image, 3,000-question evaluation bank (CoralVQA questions and references) |
+| `reference/` | H100 image indices and SHA-1 hashes of the 500 images |
+| `tests/` | Offline tests (no API calls) |
+| `CoralAgent_TRACE.ipynb` | The submitted v12 notebook, unchanged |
 
-## Running it
+## Reproducing
 
 ```bash
 git clone https://github.com/mustafanfj/CoralAgent-TRACE.git
 cd CoralAgent-TRACE
 pip install -r requirements.txt
-cp .env.example .env    # then fill in your keys; never commit this file
-jupyter lab CoralAgent_TRACE.ipynb
+
+# Analyses and figures from the released outputs (no API keys needed)
+python analysis/e2_headline.py
+python analysis/h100_controls.py
+python analysis/make_figures.py
+
+# Re-running the experiments (batch APIs; costs money)
+mkdir -p workdir/data/data workdir/data/outputs
+cp data_release/*.csv workdir/data/outputs/
+# place CoralVQA_train.jsonl from the dataset in workdir/data/data/
+cp .env.example .env              # fill in OPENAI_API_KEY and XAI_API_KEY; never commit it
+python -m coralagent.run setup-images      # downloads the 500 images and checks their hashes
+python -m coralagent.run stage E1 --dry-run
+python -m coralagent.run stage E1
 ```
 
-API keys are read from environment variables, Kaggle Secrets, or a hidden prompt. They are never stored in the notebook.
+Stages and their allowed budgets are set in `control/CONTROL.json`. Every call goes through a provider batch API, and a worst-case cost check runs before each submission. Set `CORAL_ROOT` to keep data and run state elsewhere.
 
-Every model call is checkpointed, so an interrupted run resumes where it stopped. The notebook supports several run profiles, selected with `CORALAGENT_RUN_PROFILE`:
-
-| Profile | Images | Purpose |
-|---|---:|---|
-| `development_100` | 100 | Reproduce the baselines and the A0–A8 ablation |
-| `extension_A3_500` | 500 | Run the frozen method on the remaining bank images only |
-| `analysis_only` | existing | Rebuild metrics, figures and audits with no API calls |
-| `strict_gpt5_500` | 500 | Complete the strict GPT-5 comparator on all 500 images |
-| `cross_region` | configurable | Template for untouched cross-region validation |
-
-Keep `CORALAGENT_EXPERIMENT_TAG` unchanged when moving from 100 to 500 images so completed rows are reused.
-
-**Models:** GPT-5 (orchestrator and tools), Grok-4.3 (GUARD verifier), with GPT-4.1, Grok and Gemma as zero-shot baselines. Providers: OpenAI, xAI and Together.ai.
-
-**Data:** [CoralVQA](https://huggingface.co/datasets/CoralReefData/CoralVQA), labeled LLaVA-format split. The dataset is downloaded by the notebook and not redistributed here; please follow its license and citation terms.
+**Data:** [CoralVQA](https://huggingface.co/datasets/CoralReefData/CoralVQA), training split in LLaVA format. Images are downloaded from the dataset, not redistributed. Please follow its license and citation terms.
 
 ## Citation
 

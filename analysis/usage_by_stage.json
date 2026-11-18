@@ -1,0 +1,173 @@
+{
+ "spend_usd": {
+  "openai": {
+   "spent_usd": 32.4018,
+   "reserved_usd": 0.0479,
+   "cap_usd": 38.0
+  },
+  "xai": {
+   "spent_usd": 30.2797,
+   "reserved_usd": 0.0,
+   "cap_usd": 80.0
+  },
+  "together": {
+   "spent_usd": 0.0,
+   "reserved_usd": 0.0,
+   "cap_usd": 10.0
+  }
+ },
+ "usage_by_stage": {
+  "E0|openai|gpt-5": {
+   "responses": 148,
+   "ok": 148,
+   "cost_usd": 0.3803418749999998,
+   "retried": 0,
+   "model_returned=gpt-5-2025-08-07": 148
+  },
+  "E0|together|google/gemma-4-31B-it": {
+   "responses": 10,
+   "ok": 0,
+   "cost_usd": 0.0,
+   "retried": 10
+  },
+  "E0|xai|grok-4.3": {
+   "responses": 80,
+   "ok": 80,
+   "cost_usd": 0.24961940000000005,
+   "retried": 0,
+   "model_returned=grok-4.3": 80
+  },
+  "E1|openai|gpt-5": {
+   "responses": 2410,
+   "ok": 2410,
+   "cost_usd": 2.757822500000004,
+   "retried": 39,
+   "model_returned=gpt-5-2025-08-07": 2410
+  },
+  "E1|xai|grok-4.3": {
+   "responses": 2400,
+   "ok": 2400,
+   "cost_usd": 6.271597760000007,
+   "retried": 0,
+   "model_returned=grok-4.3": 2400
+  },
+  "E1|together|google/gemma-4-31B-it": {
+   "responses": 20,
+   "ok": 0,
+   "cost_usd": 0.0,
+   "retried": 10
+  },
+  "E1|openai|gpt-4.1": {
+   "responses": 2400,
+   "ok": 2400,
+   "cost_usd": 2.6443879999999957,
+   "retried": 371,
+   "model_returned=gpt-4.1-2025-04-14": 2400
+  },
+  "E2|openai|gpt-5": {
+   "responses": 4807,
+   "ok": 4807,
+   "cost_usd": 12.49564999999999,
+   "retried": 2,
+   "model_returned=gpt-5-2025-08-07": 4807
+  },
+  "E2|xai|grok-4.3": {
+   "responses": 3822,
+   "ok": 3822,
+   "cost_usd": 12.276837800000031,
+   "retried": 0,
+   "model_returned=grok-4.3": 3822
+  },
+  "E4|openai|gpt-5": {
+   "responses": 539,
+   "ok": 539,
+   "cost_usd": 1.1882762499999984,
+   "retried": 0,
+   "model_returned=gpt-5-2025-08-07": 539
+  },
+  "E4|xai|grok-4.3": {
+   "responses": 474,
+   "ok": 474,
+   "cost_usd": 1.5454446400000004,
+   "retried": 0,
+   "model_returned=grok-4.3": 474
+  },
+  "E4|together|google/gemma-4-31B-it": {
+   "responses": 10,
+   "ok": 0,
+   "cost_usd": 0.0,
+   "retried": 10
+  },
+  "E4|openai|gpt-4.1": {
+   "responses": 349,
+   "ok": 349,
+   "cost_usd": 0.490394,
+   "retried": 5,
+   "model_returned=gpt-4.1-2025-04-14": 349
+  },
+  "E5|openai|gpt-5": {
+   "responses": 600,
+   "ok": 600,
+   "cost_usd": 1.1813018749999995,
+   "retried": 0,
+   "model_returned=gpt-5-2025-08-07": 600
+  },
+  "E6|openai|gpt-5": {
+   "responses": 1200,
+   "ok": 1200,
+   "cost_usd": 1.3800850000000016,
+   "retried": 0,
+   "model_returned=gpt-5-2025-08-07": 1200
+  },
+  "E7a|openai|gpt-5": {
+   "responses": 1843,
+   "ok": 1843,
+   "cost_usd": 4.457060000000004,
+   "retried": 1,
+   "model_returned=gpt-5-2025-08-07": 1843
+  },
+  "E7a|xai|grok-4.3": {
+   "responses": 695,
+   "ok": 695,
+   "cost_usd": 2.08444228,
+   "retried": 0,
+   "model_returned=grok-4.3": 695
+  },
+  "E8|xai|grok-4.3": {
+   "responses": 1200,
+   "ok": 1200,
+   "cost_usd": 3.667294720000003,
+   "retried": 0,
+   "model_returned=grok-4.3": 1200
+  },
+  "E3|openai|gpt-5": {
+   "responses": 896,
+   "ok": 896,
+   "cost_usd": 2.6720218750000018,
+   "retried": 1,
+   "model_returned=gpt-5-2025-08-07": 896
+  },
+  "E3|xai|grok-4.3": {
+   "responses": 672,
+   "ok": 672,
+   "cost_usd": 2.067410399999999,
+   "retried": 0,
+   "model_returned=grok-4.3": 672
+  },
+  "E3b|openai|gpt-5": {
+   "responses": 886,
+   "ok": 886,
+   "cost_usd": 2.663208750000004,
+   "retried": 1,
+   "model_returned=gpt-5-2025-08-07": 886
+  },
+  "E3b|xai|grok-4.3": {
+   "responses": 662,
+   "ok": 662,
+   "cost_usd": 2.1170909200000008,
+   "retried": 0,
+   "model_returned=grok-4.3": 662
+  }
+ },
+ "as_of": "2026-11-18 05:29:17"
+}
