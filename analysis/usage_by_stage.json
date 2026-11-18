@@ -1,8 +1,8 @@
 {
  "spend_usd": {
   "openai": {
-   "spent_usd": 32.4018,
-   "reserved_usd": 0.0479,
+   "spent_usd": 34.7765,
+   "reserved_usd": 0.0,
    "cap_usd": 38.0
   },
   "xai": {
@@ -167,7 +167,14 @@
    "cost_usd": 2.1170909200000008,
    "retried": 0,
    "model_returned=grok-4.3": 662
+  },
+  "E8b|openai|gpt-4.1": {
+   "responses": 1200,
+   "ok": 1200,
+   "cost_usd": 2.3746910000000025,
+   "retried": 0,
+   "model_returned=gpt-4.1-2025-04-14": 1200
   }
  },
- "as_of": "2026-11-18 05:29:17"
+ "as_of": "2026-11-18 05:52:28"
 }

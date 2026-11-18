@@ -41,14 +41,14 @@ CoralVQA training split, 500 images × 6 questions. The development set D is ima
 
 - **Primary, pre-registered:** TRACE beats strict GPT-5 by +2.0 points (CI +0.4 to +3.6, p = 0.011). The gain is concentrated on bleaching and health questions (0.759 vs 0.634).
 - **Matched controls on H100:** TRACE beats a generic GPT-5 tool-using agent with the same tools and verifier (+4.2, Holm p = 0.018). It also beats a single GPT-5 call given the same information (+5.0, Holm p = 0.009). It is not significantly better than GPT-5 self-consistency (+2.3) or GPT-4.1.
-- **Evidence:** blinded LLM judges rate TRACE's evidence as grounded as the generic agent's. Its traces expose more of its own errors (56% vs 26% of wrong answers). Referring the least-trusted 40% of answers raises the accuracy of the rest from 0.545 to 0.669.
+- **Evidence:** two independent blinded LLM judges (Grok-4.3 and GPT-4.1) rate TRACE's evidence as grounded as the generic agent's. Both find that its traces expose more of its own errors (56% vs 26% and 34% vs 10% of wrong answers). Referring the least-trusted 40% of answers raises the accuracy of the rest from 0.545 to 0.669.
 
 ![Selective accuracy](analysis/figures/fig_selective_accuracy.png)
 
 - **Ablations on D:** the prior with SCOPE and routing carries the gain. Retrieval has no measurable effect, and GUARD lowers accuracy slightly (removing it adds +2.8 on D and +1.3 on H).
 - **Limitations:** visible-bleaching sensitivity is low (0.333 on H, specificity 0.864). The closed genus list lowers accuracy for every model, because the prompt shows only the first 90 of 392 labels. Results are limited to the CoralVQA benchmark.
 
-The full tables are in [`analysis/`](analysis): `E2_headline.md`, `H100_controls.md`, `E3_ablations.md`, `E4_genus.md`, `E8_judge.md` and `Remaining_analyses.md`.
+The full tables are in [`analysis/`](analysis): `E2_headline.md`, `H100_controls.md`, `E3_ablations.md`, `E4_genus.md`, `E8_judge.md`, `E8b_agreement.md` and `Remaining_analyses.md`.
 
 ## Repository contents
 
