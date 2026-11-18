@@ -7,3 +7,10 @@ outputs/
 data/
 *.zip
 .DS_Store
+# v13 revision: local data and run state
+workdir/
+cache_v12_core/
+outputs_v12_core/
+images/
+sample_images/
+reports/

@@ -1,0 +1,384 @@
+[
+ {
+  "category": "missed visible bleaching",
+  "sample_id": "32008152901__CoralVQA__r103364",
+  "image_id": "32008152901",
+  "question": "[vqa] Does the image contain bleached corals? Provide your answer as short as possible.",
+  "reference": "Yes",
+  "prior": "No",
+  "focused_vqa": "No",
+  "genus_tool": "",
+  "before_guard": "No",
+  "final": "No",
+  "finalizer_source": "v12_bleaching_consensus_no",
+  "tools": [
+   "spatial_focus",
+   "baseline_prior",
+   "focused_vqa",
+   "retrieval"
+  ],
+  "verifier": {
+   "supported": true,
+   "support_level": "supported",
+   "exact_question_answered": true,
+   "contradictions": [],
+   "missing_evidence": [],
+   "suggested_answer": null,
+   "repair_instruction": null,
+   "verifier_confidence": 0.9,
+   "_verifier_provider": "xai",
+   "_verifier_model": "grok-4.3",
+   "_verifier_label": "grok_guard",
+   "_latency_s": null,
+   "_error": null
+  },
+  "repair_used": false,
+  "region": "whole_image"
+ },
+ {
+  "category": "missed visible bleaching",
+  "sample_id": "36021057401__CoralVQA__r136699",
+  "image_id": "36021057401",
+  "question": "[vqa] Are there bleached corals visible in the image? Provide your answer as short as possible.",
+  "reference": "Yes",
+  "prior": "yes",
+  "focused_vqa": "No",
+  "genus_tool": "",
+  "before_guard": "No",
+  "final": "No",
+  "finalizer_source": "v12_bleaching_consensus_no",
+  "tools": [
+   "spatial_focus",
+   "baseline_prior",
+   "focused_vqa",
+   "retrieval"
+  ],
+  "verifier": {
+   "supported": true,
+   "support_level": "supported",
+   "exact_question_answered": true,
+   "contradictions": [],
+   "missing_evidence": [],
+   "suggested_answer": null,
+   "repair_instruction": null,
+   "verifier_confidence": 0.82,
+   "_verifier_provider": "xai",
+   "_verifier_model": "grok-4.3",
+   "_verifier_label": "grok_guard",
+   "_latency_s": null,
+   "_error": null
+  },
+  "repair_used": false,
+  "region": "whole_image"
+ },
+ {
+  "category": "wrong genus",
+  "sample_id": "32043063601__CoralVQA__r105824",
+  "image_id": "32043063601",
+  "question": "[vqa] Which coral genus is located in the top right corner of the image? Provide your answer as short as possible.",
+  "reference": "Pocillopora",
+  "prior": "Acropora",
+  "focused_vqa": "Acropora",
+  "genus_tool": "Acropora",
+  "before_guard": "Acropora",
+  "final": "Acropora",
+  "finalizer_source": "genus_consensus",
+  "tools": [
+   "spatial_focus",
+   "baseline_prior",
+   "focused_vqa",
+   "genus_identification"
+  ],
+  "verifier": {
+   "supported": true,
+   "support_level": "supported",
+   "exact_question_answered": true,
+   "contradictions": [],
+   "missing_evidence": [],
+   "suggested_answer": null,
+   "repair_instruction": null,
+   "verifier_confidence": 0.85,
+   "_verifier_provider": "xai",
+   "_verifier_model": "grok-4.3",
+   "_verifier_label": "grok_guard",
+   "_latency_s": null,
+   "_error": null
+  },
+  "repair_used": false,
+  "region": "top_right"
+ },
+ {
+  "category": "wrong genus",
+  "sample_id": "42014137201__CoralVQA__r225675",
+  "image_id": "42014137201",
+  "question": "[vqa] In the image, which coral genus can be found in the top-right corner? Provide your answer as short as possible.",
+  "reference": "Lobophyllia",
+  "prior": "Porites",
+  "focused_vqa": "Colpophyllia",
+  "genus_tool": "unclear",
+  "before_guard": "Colpophyllia",
+  "final": "Colpophyllia",
+  "finalizer_source": "genus_consensus__repair_blocked",
+  "tools": [
+   "spatial_focus",
+   "baseline_prior",
+   "focused_vqa",
+   "genus_identification"
+  ],
+  "verifier": {
+   "supported": false,
+   "support_level": "unsupported",
+   "exact_question_answered": true,
+   "contradictions": [
+    "baseline_prior gives Porites",
+    "genus_identification concludes 'unclear' with max candidate confidence 0.18",
+    "focused_vqa confidence only 0.35 with caveat of obscured features"
+   ],
+   "missing_evidence": [
+    "clear diagnostic morphology in top-right crop",
+    "unambiguous skeletal pattern or corallites"
+   ],
+   "suggested_answer": null,
+   "repair_instruction": "Change answer to 'unclear' (or omit) because genus_identification explicitly states identification is unreliable.",
+   "verifier_confidence": 0.75,
+   "_verifier_provider": "xai",
+   "_verifier_model": "grok-4.3",
+   "_verifier_label": "grok_guard",
+   "_latency_s": null,
+   "_error": null
+  },
+  "repair_used": true,
+  "region": "top_right"
+ },
+ {
+  "category": "wrong answer accepted by GUARD",
+  "sample_id": "moorea_228_2008-04-10_mcr_lter2_out17m_pole5-6_qu5_20080410.JPG__CoralVQA__r161223",
+  "image_id": "moorea_228_2008-04-10_mcr_lter2_out17m_pole5-6_qu5_20080410.JPG",
+  "question": "[vqa] What is the morphological structure of the coral genus in the lower left of the image? Provide your answer as short as possible.",
+  "reference": "Branched",
+  "prior": "branching",
+  "focused_vqa": "branching",
+  "genus_tool": "",
+  "before_guard": "Branching",
+  "final": "Branching",
+  "finalizer_source": "morphology_consensus",
+  "tools": [
+   "spatial_focus",
+   "baseline_prior",
+   "focused_vqa",
+   "image_summary"
+  ],
+  "verifier": {
+   "supported": true,
+   "support_level": "supported",
+   "exact_question_answered": true,
+   "contradictions": [],
+   "missing_evidence": [],
+   "suggested_answer": null,
+   "repair_instruction": null,
+   "verifier_confidence": 0.9,
+   "_verifier_provider": "xai",
+   "_verifier_model": "grok-4.3",
+   "_verifier_label": "grok_guard",
+   "_latency_s": null,
+   "_error": null
+  },
+  "repair_used": false,
+  "region": "bottom_left"
+ },
+ {
+  "category": "wrong answer accepted by GUARD",
+  "sample_id": "moorea_522_2008-04-08_mcr_lter5_out10m_pole3-4_qu6_20080408.JPG__CoralVQA__r164496",
+  "image_id": "moorea_522_2008-04-08_mcr_lter5_out10m_pole3-4_qu6_20080408.JPG",
+  "question": "[vqa] Which coral genus is located in the lower left of the image? Provide your answer as short as possible.",
+  "reference": "Porites",
+  "prior": "Acropora",
+  "focused_vqa": "Porites",
+  "genus_tool": "Astreopora",
+  "before_guard": "Astreopora",
+  "final": "Astreopora",
+  "finalizer_source": "genus_consensus",
+  "tools": [
+   "spatial_focus",
+   "baseline_prior",
+   "focused_vqa",
+   "genus_identification"
+  ],
+  "verifier": {
+   "supported": true,
+   "support_level": "partially_supported",
+   "exact_question_answered": true,
+   "contradictions": [
+    "focused_vqa returned Porites",
+    "baseline_prior returned Acropora"
+   ],
+   "missing_evidence": [],
+   "suggested_answer": null,
+   "repair_instruction": null,
+   "verifier_confidence": 0.65,
+   "_verifier_provider": "xai",
+   "_verifier_model": "grok-4.3",
+   "_verifier_label": "grok_guard",
+   "_latency_s": null,
+   "_error": null
+  },
+  "repair_used": false,
+  "region": "bottom_left"
+ },
+ {
+  "category": "GUARD changed a correct answer to a wrong one",
+  "sample_id": "mcr_lter2_out17m_pole4-5_qu5_20100406__CoralVQA__r175128",
+  "image_id": "mcr_lter2_out17m_pole4-5_qu5_20100406",
+  "question": "[vqa] What is the morphological structure of the coral in the left-bottom area? Provide your answer as short as possible.",
+  "reference": "Massive",
+  "prior": "massive",
+  "focused_vqa": "massive",
+  "genus_tool": "",
+  "before_guard": "Massive",
+  "final": "Encrusting",
+  "finalizer_source": "v12_verifier_repair_llm",
+  "tools": [
+   "spatial_focus",
+   "baseline_prior",
+   "focused_vqa",
+   "image_summary"
+  ],
+  "verifier": {
+   "supported": true,
+   "support_level": "partially_supported",
+   "exact_question_answered": true,
+   "contradictions": [
+    "focused_vqa tool reports massive with boulder-like knobs; image_summary and agent evidence report encrusting low-relief crust"
+   ],
+   "missing_evidence": [],
+   "suggested_answer": null,
+   "repair_instruction": null,
+   "verifier_confidence": 0.75,
+   "_verifier_provider": "xai",
+   "_verifier_model": "grok-4.3",
+   "_verifier_label": "grok_guard",
+   "_latency_s": null,
+   "_error": null
+  },
+  "repair_used": true,
+  "region": "bottom_left"
+ },
+ {
+  "category": "GUARD changed a correct answer to a wrong one",
+  "sample_id": "37006068001__CoralVQA__r149046",
+  "image_id": "37006068001",
+  "question": "[vqa] Is the coral genus located in the bottom-center characterized by a dome shape? Provide your answer as short as possible.",
+  "reference": "Yes",
+  "prior": "Yes",
+  "focused_vqa": "no",
+  "genus_tool": "",
+  "before_guard": "Yes",
+  "final": "No",
+  "finalizer_source": "v12_verifier_suggested_answer_repair",
+  "tools": [
+   "spatial_focus",
+   "baseline_prior",
+   "focused_vqa",
+   "image_summary"
+  ],
+  "verifier": {
+   "supported": true,
+   "support_level": "supported",
+   "exact_question_answered": true,
+   "contradictions": [],
+   "missing_evidence": [],
+   "suggested_answer": null,
+   "repair_instruction": null,
+   "verifier_confidence": 0.85,
+   "_verifier_provider": "xai",
+   "_verifier_model": "grok-4.3",
+   "_verifier_label": "grok_guard",
+   "_latency_s": null,
+   "_error": null
+  },
+  "repair_used": true,
+  "region": "bottom_center"
+ },
+ {
+  "category": "verifier error contained by protection",
+  "sample_id": "moorea_382_2008-05-04_mcr_lter4_fringingreef_pole5-6_qu2_20080504.JPG__CoralVQA__r166694",
+  "image_id": "moorea_382_2008-05-04_mcr_lter4_fringingreef_pole5-6_qu2_20080504.JPG",
+  "question": "[vqa] Which coral genus is located in the upper center of the image? Provide your answer as short as possible.",
+  "reference": "Porites",
+  "prior": "Porites",
+  "focused_vqa": "unclear",
+  "genus_tool": "unclear",
+  "before_guard": "Porites",
+  "final": "Porites",
+  "finalizer_source": "baseline_prior_genus_fallback__repair_blocked",
+  "tools": [
+   "spatial_focus",
+   "baseline_prior",
+   "focused_vqa",
+   "genus_identification"
+  ],
+  "verifier": {
+   "supported": false,
+   "support_level": "unsupported",
+   "exact_question_answered": true,
+   "contradictions": [
+    "focused_vqa returns 'unclear' (conf 0.28) with explicit note of missing corallite detail",
+    "genus_identification returns 'unclear' (conf 0.29) and lists Astreopora/Cyphastrea as top candidates; notes Porites not in label set"
+   ],
+   "missing_evidence": [
+    "clear corallite morphology required for reliable genus assignment"
+   ],
+   "suggested_answer": null,
+   "repair_instruction": "Replace baseline_prior fallback with focused_vqa/genus_identification result ('unclear')",
+   "verifier_confidence": 0.82,
+   "_verifier_provider": "xai",
+   "_verifier_model": "grok-4.3",
+   "_verifier_label": "grok_guard",
+   "_latency_s": null,
+   "_error": null
+  },
+  "repair_used": true,
+  "region": "top_center"
+ },
+ {
+  "category": "verifier error contained by protection",
+  "sample_id": "mcr_lter2_out17m_pole4-5_qu5_20100406__CoralVQA__r175122",
+  "image_id": "mcr_lter2_out17m_pole4-5_qu5_20100406",
+  "question": "[vqa] Which coral genus is located in the left-bottom position? Provide your answer as short as possible.",
+  "reference": "Porites",
+  "prior": "Porites",
+  "focused_vqa": "unclear",
+  "genus_tool": "unclear",
+  "before_guard": "Porites",
+  "final": "Porites",
+  "finalizer_source": "baseline_prior_genus_fallback__repair_blocked",
+  "tools": [
+   "spatial_focus",
+   "baseline_prior",
+   "focused_vqa",
+   "genus_identification"
+  ],
+  "verifier": {
+   "supported": false,
+   "support_level": "unsupported",
+   "exact_question_answered": true,
+   "contradictions": [
+    "focused_vqa reports unclear with rubble substrate and no distinct corallite features",
+    "genus_identification reports unclear, dead rubble/algae dominant, no diagnostic structures"
+   ],
+   "missing_evidence": [
+    "no visual evidence of Porites or any live coral genus in bottom-left crop"
+   ],
+   "suggested_answer": null,
+   "repair_instruction": "replace answer with unclear per focused_vqa and genus_identification results",
+   "verifier_confidence": 0.85,
+   "_verifier_provider": "xai",
+   "_verifier_model": "grok-4.3",
+   "_verifier_label": "grok_guard",
+   "_latency_s": null,
+   "_error": null
+  },
+  "repair_used": true,
+  "region": "bottom_left"
+ }
+]

@@ -1,0 +1,93 @@
+{
+  "_comment": "Edited only by Claude (controller). All stages allowed to run in order unattended (Mustafa, 2026-11-14). A stopped/crashed stage blocks later stages until its token is increased.",
+  "run_order": [
+    "E0",
+    "E1",
+    "E2",
+    "E4",
+    "E5",
+    "E6",
+    "E7a",
+    "E8",
+    "E3",
+    "E3b",
+    "E8b"
+  ],
+  "stages": {
+    "E0": {
+      "allow": true,
+      "token": 2
+    },
+    "E1": {
+      "allow": true,
+      "token": 4
+    },
+    "E2": {
+      "allow": true,
+      "token": 1
+    },
+    "E3": {
+      "allow": true,
+      "token": 1
+    },
+    "E4": {
+      "allow": true,
+      "token": 3
+    },
+    "E5": {
+      "allow": true,
+      "token": 1
+    },
+    "E6": {
+      "allow": true,
+      "token": 1
+    },
+    "E7a": {
+      "allow": true,
+      "token": 1
+    },
+    "E8": {
+      "allow": true,
+      "token": 1
+    },
+    "E3b": {
+      "allow": true,
+      "token": 1
+    },
+    "E8b": {
+      "allow": true,
+      "token": 1
+    }
+  },
+  "allowed_stages": [
+    "E0",
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5",
+    "E6",
+    "E7a",
+    "E8",
+    "E3b",
+    "E8b"
+  ],
+  "caps": {
+    "openai": 38.0,
+    "xai": 80.0,
+    "together": 10.0
+  },
+  "options": {
+    "include_gpt41": true,
+    "e6_k": 3,
+    "max_requests_per_batch": 1000,
+    "include_a7": false,
+    "judge": "grok",
+    "e3_images": "auto",
+    "judge_b": "gpt-4.1"
+  },
+  "accept_canary": [],
+  "optional_providers": [
+    "together"
+  ]
+}
