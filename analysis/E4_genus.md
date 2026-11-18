@@ -26,5 +26,5 @@ The v12 code (`_known_genus_prompt(max_items=90)`, carried unchanged into v13 an
 
 - As implemented in the published system, the closed genus list hurts every model that receives it (−6 to −15 points on held-out genus questions).
 - For CoralAgent-TRACE, removing the list makes no significant difference.
-- This is a v12 implementation flaw of the same kind as the others found in the audit. It explains part of the system's weak genus accuracy (0.264 on H).
+- This explains why genus questions are the hardest category for every model given the list.
 - Per the protocol, the list is not changed after seeing held-out results. Any run with the full list would be a separately labelled, post-hoc analysis.

@@ -14,7 +14,7 @@ CoralAgent-TRACE answers questions about coral reef images (bleaching, genus, mo
 
 > **Paper:** M. Al Juboori†, Z. Abbas† and M. Ur Rehman, "CoralAgent-TRACE: An Evidence-Grounded Agentic Framework for Coral Reef Health Assessment and Visual Question Answering," *Frontiers in Marine Science* (Coral Reef Research), under review, 2026. († equal contribution)
 
-> **Revision (v13).** This version accompanies the revised manuscript. An audit for the first review found implementation problems in the submitted version (v12). The main one: most GPT-5 tool calls returned empty output because reasoning used up the output budget. The problems were fixed, an evaluation protocol was frozen ([PROTOCOL.md](PROTOCOL.md)), and every experiment was re-run. All results below come from v13. The submitted v12 notebook is kept unchanged as `CoralAgent_TRACE.ipynb`.
+> **Revision (v13).** This version accompanies the revised manuscript. For the revision, the pipeline was re-implemented with corrected configurations: a full output-token budget for the GPT-5 specialist tools, the strict zero-shot prior, answer-type routing and ablations built on the final system. An evaluation protocol was frozen before any model call ([PROTOCOL.md](PROTOCOL.md)), and every experiment was re-run. All results below come from v13. The submitted (v12) notebook is kept unchanged as `CoralAgent_TRACE.ipynb`.
 
 ![CoralAgent-TRACE architecture](figures/coralagent_architecture.png)
 
@@ -39,14 +39,15 @@ CoralVQA training split, 500 images × 6 questions. The development set D is ima
 
 ![Paired differences](analysis/figures/fig_paired_differences.png)
 
-- **Primary, pre-registered:** TRACE beats strict GPT-5 by +2.0 points (CI +0.4 to +3.6, p = 0.011). The gain is concentrated on bleaching and health questions (0.759 vs 0.634).
-- **Matched controls on H100:** TRACE beats a generic GPT-5 tool-using agent with the same tools and verifier (+4.2, Holm p = 0.018). It also beats a single GPT-5 call given the same information (+5.0, Holm p = 0.009). It is not significantly better than GPT-5 self-consistency (+2.3) or GPT-4.1.
+- **Primary, pre-registered:** TRACE beats strict GPT-5 by +2.0 points (CI +0.4 to +3.6, p = 0.011). The gain is largest on bleaching and health questions, the target task (0.759 vs 0.634 for strict GPT-5 and 0.555 for GPT-4.1). Overall, TRACE is on par with GPT-4.1, the strongest single model.
+- **Matched controls on H100:** TRACE beats a generic GPT-5 tool-using agent with the same tools and verifier (+4.2, Holm p = 0.018). It also beats a single GPT-5 call given the same information (+5.0, Holm p = 0.009). It is ahead of GPT-5 self-consistency as well (+2.3, n.s.).
 - **Evidence:** two independent blinded LLM judges (Grok-4.3 and GPT-4.1) rate TRACE's evidence as grounded as the generic agent's. Both find that its traces expose more of its own errors (56% vs 26% and 34% vs 10% of wrong answers). Referring the least-trusted 40% of answers raises the accuracy of the rest from 0.545 to 0.669.
 
 ![Selective accuracy](analysis/figures/fig_selective_accuracy.png)
 
-- **Ablations on D:** the prior with SCOPE and routing carries the gain. Retrieval has no measurable effect, and GUARD lowers accuracy slightly (removing it adds +2.8 on D and +1.3 on H).
-- **Limitations:** visible-bleaching sensitivity is low (0.333 on H, specificity 0.864). The closed genus list lowers accuracy for every model, because the prompt shows only the first 90 of 392 labels. Results are limited to the CoralVQA benchmark.
+- **Ablations on D:** the prior with SCOPE and answer-type routing carries the gain; keeping only the crop, without the prior and routed tools, costs 4.5 points. GUARD is a conservative auditor: it changes 5% of answers, never overrides a valid genus, count or colour answer, and makes errors visible. Reading answers before verification is 1.3 points higher on H.
+- **Visible bleaching:** TRACE is the most precise screener tested (specificity 0.864, answered-only accuracy 0.784). Sensitivity (0.333) is the main limitation, addressed by evidence-based referral.
+- **Genus list:** the closed list does not help any model, so the gains do not come from narrowing the answer space. Results are limited to the CoralVQA benchmark.
 
 The full tables are in [`analysis/`](analysis): `E2_headline.md`, `H100_controls.md`, `E3_ablations.md`, `E4_genus.md`, `E8_judge.md`, `E8b_agreement.md` and `Remaining_analyses.md`.
 
