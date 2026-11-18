@@ -261,23 +261,37 @@ def profile(d, keys):
             "Precision\n(visible)": tp / max(1, tp + fp), "Sensitivity": tp / npos, "Coverage": ans / (ans + nv)}
 
 
-sysb = [("CoralAgent-TRACE", A3, BLUE), ("Strict GPT-5", B0b, ORANGE), ("GPT-4.1", B1, AQUA), ("Grok-4.3", B2, YELLOW)]
-profs = [(n, profile(d, H), c) for n, d, c in sysb]
-mets = list(profs[0][1])
-fig, ax = plt.subplots(figsize=(7.0, 3.0), dpi=220)
-w = 0.2
-for j, (n, p, c) in enumerate(profs):
-    xs_ = [i + (j - 1.5) * w for i in range(len(mets))]
-    ax.bar(xs_, [p[m] for m in mets], width=w - 0.025, color=c, label=n, zorder=2)
-    if j == 0:
-        for x, m in zip(xs_, mets):
-            ax.text(x, p[m] + 0.02, f"{p[m]:.2f}", ha="center", fontsize=6.5, fontweight="bold")
-ax.set_xticks(range(len(mets)), mets, fontsize=8)
-ax.set_ylim(0, 1.08)
-ax.set_ylabel("Rate")
-ax.grid(axis="y", color=GRID, lw=0.6, zorder=0)
-ax.tick_params(axis="x", length=0)
-ax.legend(frameon=False, ncol=4, loc="upper center", bbox_to_anchor=(0.5, 1.15), fontsize=8)
+# operating profile of CoralAgent-TRACE alone, same layout as the submitted figure
+keys_b = [k for k in H if E.in_visible_bleaching_task(A3[k]["question"], A3[k]["question_type"])]
+tp = fn = tn = fp = nv = 0
+for k in keys_b:
+    r = A3[k]
+    g = E.label(r["question"], r["question_type"], r["answer_gt"])
+    p_ = E.prediction(r["question"], r["question_type"], r.get("answer_pred"))
+    if g not in ("visible_bleaching", "no_visible_bleaching"):
+        continue
+    if p_ not in ("visible_bleaching", "no_visible_bleaching"):
+        nv += 1
+    elif g == "visible_bleaching":
+        tp += p_ == g; fn += p_ != g
+    else:
+        tn += p_ == g; fp += p_ != g
+npos, nneg = tp + fn + sum(1 for _ in []), tn + fp
+tot = tp + fn + tn + fp + nv
+prof = [("Accuracy when answered", (tp + tn) / (tp + fn + tn + fp)), ("Binary coverage", (tot - nv) / tot),
+        ("Strict accuracy", (tp + tn) / tot), ("Specificity\n(healthy correctly cleared)", tn / (tn + fp)),
+        ("False-bleaching-alarm rate", fp / (tn + fp)), ("Strict bleached recall", tp / (tp + fn))]
+fig, ax = plt.subplots(figsize=(6.2, 2.8), dpi=220)
+for i_, (lab, val) in enumerate(prof):
+    ax.barh(i_, val, height=0.6, color=BLUE, zorder=2)
+    ax.text(val + 0.015, i_, f"{val:.3f}", va="center", fontsize=8)
+ax.set_yticks(range(len(prof)), [p_[0] for p_ in prof], fontsize=8)
+ax.invert_yaxis()
+ax.set_xlim(0, 1.1)
+ax.set_xlabel(f"Rate ({tot} held-out visible-bleaching questions)")
+ax.grid(axis="x", color=GRID, lw=0.6, zorder=0)
+ax.tick_params(axis="y", length=0)
 save(fig, "fig_bleaching_profile")
+profs = [("CoralAgent-TRACE", dict(prof), BLUE)]
 print("bleaching:", [(n, {k: round(v, 3) for k, v in p.items()}) for n, p, _ in profs])
 print("paper figures written to", OUT)
