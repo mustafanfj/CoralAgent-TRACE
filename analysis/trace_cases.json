@@ -1,0 +1,134 @@
+{
+ "figure_cases": [
+  {
+   "panel": "a",
+   "title": "Focused evidence overturns an incorrect bleaching prior",
+   "n_in_category": 93,
+   "sample_id": "30013056001__CoralVQA__r214604",
+   "image_id": "30013056001",
+   "question": "[vqa] Are there bleached corals present in the image? Provide your answer as short as possible.",
+   "reference": "No",
+   "prior": "Yes",
+   "focused_vqa": "No",
+   "before_guard": "No",
+   "final": "No",
+   "tools": [
+    "spatial_focus",
+    "baseline_prior",
+    "focused_vqa",
+    "retrieval"
+   ],
+   "region": "whole_image",
+   "bbox_norm": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "uses_crop": false,
+   "verifier_level": "supported",
+   "verifier_suggested": null,
+   "finalizer_source": "v12_bleaching_consensus_no"
+  },
+  {
+   "panel": "b",
+   "title": "Visible bleaching detected and supported by GUARD",
+   "n_in_category": 13,
+   "sample_id": "34004160101__CoralVQA__r193546",
+   "image_id": "34004160101",
+   "question": "[vqa] Does the image contain bleached corals? Provide your answer as short as possible.",
+   "reference": "Yes",
+   "prior": "Yes",
+   "focused_vqa": "Yes",
+   "before_guard": "Yes",
+   "final": "Yes",
+   "tools": [
+    "spatial_focus",
+    "baseline_prior",
+    "focused_vqa",
+    "retrieval"
+   ],
+   "region": "whole_image",
+   "bbox_norm": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "uses_crop": false,
+   "verifier_level": "supported",
+   "verifier_suggested": null,
+   "finalizer_source": "v12_bleaching_vqa_only_yes"
+  },
+  {
+   "panel": "c",
+   "title": "SCOPE crop gives the correct region-specific answer",
+   "n_in_category": 60,
+   "sample_id": "37007191101__CoralVQA__r152214",
+   "image_id": "37007191101",
+   "question": "[vqa] Is the coral positioned in the top-left of the image? Provide your answer as short as possible.",
+   "reference": "Yes",
+   "prior": "No",
+   "focused_vqa": "yes",
+   "before_guard": "yes",
+   "final": "yes",
+   "tools": [
+    "spatial_focus",
+    "baseline_prior",
+    "focused_vqa"
+   ],
+   "region": "top_left",
+   "bbox_norm": [
+    0.0,
+    0.0,
+    0.48,
+    0.48
+   ],
+   "uses_crop": true,
+   "verifier_level": "supported",
+   "verifier_suggested": null,
+   "finalizer_source": "focused_vqa_generic"
+  },
+  {
+   "panel": "d",
+   "title": "Correct answer protected from a verifier error",
+   "n_in_category": 121,
+   "sample_id": "leptoseris_3__CoralVQA__r28755",
+   "image_id": "leptoseris_3",
+   "question": "[vqa] Which coral genus has the largest visible area in the image? Provide your answer as short as possible.",
+   "reference": "Leptoseris",
+   "prior": "Leptoseris",
+   "focused_vqa": "unclear",
+   "before_guard": "Leptoseris",
+   "final": "Leptoseris",
+   "tools": [
+    "spatial_focus",
+    "baseline_prior",
+    "focused_vqa",
+    "genus_identification"
+   ],
+   "region": "whole_image",
+   "bbox_norm": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "uses_crop": false,
+   "verifier_level": "unsupported",
+   "verifier_suggested": "Colpophyllia",
+   "finalizer_source": "presence_area_baseline_prior_guard__repair_blocked"
+  }
+ ],
+ "extra_image_ids": [
+  "32008152901",
+  "32043063601",
+  "36021057401",
+  "37006068001",
+  "42014137201",
+  "mcr_lter2_out17m_pole4-5_qu5_20100406",
+  "moorea_228_2008-04-10_mcr_lter2_out17m_pole5-6_qu5_20080410.JPG",
+  "moorea_382_2008-05-04_mcr_lter4_fringingreef_pole5-6_qu2_20080504.JPG",
+  "moorea_522_2008-04-08_mcr_lter5_out10m_pole3-4_qu6_20080408.JPG"
+ ]
+}
